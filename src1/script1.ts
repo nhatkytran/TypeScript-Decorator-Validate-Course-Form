@@ -47,14 +47,14 @@ function validatorsRegister(
 }
 
 enum Conditions {
-  REQUIRED,
+  REQUIRE,
   MIN_LENGTH,
   POSITIVE,
 }
 
-function Required(target: object, propName: string) {
+function Require(target: object, propName: string) {
   const blueprintName = target.constructor.name;
-  validatorsRegister(blueprintName, propName, Conditions.REQUIRED);
+  validatorsRegister(blueprintName, propName, Conditions.REQUIRE);
 }
 
 function MinLength(target: object, propName: string) {
@@ -68,7 +68,7 @@ function Positive(target: object, propName: string) {
 }
 
 class Course {
-  @Required @MinLength title: string;
+  @Require @MinLength title: string;
   @Positive price: number;
 
   constructor(title: string, price: number) {
@@ -83,7 +83,7 @@ function validate(obj: any): boolean {
 
   return Object.entries(validatorCondtions).every(([key, conditions]) => {
     return conditions.every((condition) => {
-      if (condition === Conditions.REQUIRED) {
+      if (condition === Conditions.REQUIRE) {
         if (!obj.title.trim().length) {
           alert(`[${key}]: Input can't be all blank spaces`);
           return false;
